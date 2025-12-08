@@ -1,4 +1,4 @@
-// backend/src/services/authService.ts
+// backend/services/authService.ts
 
 import { User, UserRole } from "../types/User";
 
