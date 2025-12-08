@@ -2,15 +2,16 @@
 
 import { Router } from "express";
 import { Job, JobStatus } from "../types/Job";
+import { jobs } from "../store/inMemoryDb";
 
 const router = Router();
 
 /**
- * TEMP in-memory job list.
+ * Job routes (temporary in-memory implementation).
  * Developer will replace with real database queries.
  */
-const jobs: Job[] = [];
 
+// Using shared jobs[] imported from inMemoryDb
 function generateId() {
   return "job_" + Math.random().toString(36).substring(2, 10);
 }
