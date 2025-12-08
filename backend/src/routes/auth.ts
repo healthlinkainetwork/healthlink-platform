@@ -1,33 +1,67 @@
-        import { Router } from "express";
+// backend/src/routes/auth.ts
 
-        const router = Router();
+import { Router } from "express";
+import { loginUser, registerUser } from "../services/authService";
+import type { UserRole } from "../types/User";
+
+const router = Router();
 
 /**
- * Simple placeholder auth routes.
- * Your developer will replace these with real logic:
- * - validate input
- * - hash passwords
- * - generate tokens
- * - integrate with your user table
+ * Auth routes (starter version).
+ * Developer TODOs:
+ * - Add password fields and validation
+ * - Hash passwords (e.g. bcrypt)
+ * - Replace in-memory users with real database
+ * - Replace fake token with real JWT
  */
 
-        router.post("/register", (req, res) => {
-          const { email } = req.body;
-          return res.status(201).json({
-            ok: true,
-            message: "Placeholder register endpoint",
-            email,
-          });
-        });
+router.post("/register", (req, res) => {
+  try {
+    const { email, role } = req.body as { email?: string; role?: UserRole };
 
-        router.post("/login", (req, res) => {
-          const { email } = req.body;
-          return res.json({
-            ok: true,
-            message: "Placeholder login endpoint",
-            email,
-            token: "fake-jwt-token",
-          });
-        });
+    if (!email) {
+      return res.status(400).json({ ok: false, error: "Email is required" });
+    }
 
-        export default router;
+    const normalizedRole: UserRole = role ?? "caregiver";
+
+    const user = registerUser(email, normalizedRole);
+
+    return res.status(201).json({
+      ok: true,
+      message: "User registered (temporary in-memory implementation)",
+      user,
+    });
+  } catch (err: any) {
+    return res.status(400).json({
+      ok: false,
+      error: err.message || "Failed to register user",
+    });
+  }
+});
+
+router.post("/login", (req, res) => {
+  try {
+    const { email } = req.body as { email?: string };
+
+    if (!email) {
+      return res.status(400).json({ ok: false, error: "Email is required" });
+    }
+
+    const { user, token } = loginUser(email);
+
+    return res.json({
+      ok: true,
+      message: "User logged in (temporary in-memory implementation)",
+      user,
+      token,
+    });
+  } catch (err: any) {
+    return res.status(401).json({
+      ok: false,
+      error: err.message || "Invalid login",
+    });
+  }
+});
+
+export default router;
