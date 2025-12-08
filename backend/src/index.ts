@@ -5,6 +5,8 @@ import morgan from "morgan";
 import { config } from "dotenv";
 import healthcheckRouter from "./routes/healthcheck";
 import authRouter from "./routes/auth";
+import caregiversRouter from "./routes/caregivers";
+import jobsRouter from "./routes/jobs";
 
 config();
 
@@ -18,6 +20,8 @@ app.use(morgan("dev"));
 
 app.use("/health", healthcheckRouter);
 app.use("/auth", authRouter);
+app.use("/caregivers", caregiversRouter);
+app.use("/jobs", jobsRouter);
 
 app.get("/", (_req, res) => {
   res.json({ ok: true, message: "HealthLink backend API root" });
