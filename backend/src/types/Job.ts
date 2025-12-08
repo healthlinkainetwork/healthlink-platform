@@ -12,5 +12,10 @@ export interface Job {
   hoursEstimated: number;
   status: JobStatus;
   postedAt: string;
-  assignedCaregiverId?: string; // CaregiverProfile.id
+
+  // New: who posted this job (optional for now)
+  agencyId?: string;
+
+  // Who it's assigned to (CaregiverProfile.id)
+  assignedCaregiverId?: string;
 }
