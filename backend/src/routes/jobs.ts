@@ -29,6 +29,7 @@ router.post("/", (req, res) => {
     locationState,
     hourlyRate,
     hoursEstimated,
+    agencyId,
   } = req.body as Partial<Job>;
 
   if (!title || hourlyRate == null || hoursEstimated == null) {
@@ -48,6 +49,7 @@ router.post("/", (req, res) => {
     hoursEstimated,
     status: "open",
     postedAt: new Date().toISOString(),
+    agencyId,
   };
 
   jobs.push(job);
@@ -77,6 +79,33 @@ router.patch("/:id/status", (req, res) => {
   return res.json({
     ok: true,
     message: "Job status updated",
+    job,
+  });
+});
+
+// POST /jobs/:id/assign
+router.post("/:id/assign", (req, res) => {
+  const { id } = req.params;
+  const { caregiverId } = req.body as { caregiverId?: string };
+
+  const job = jobs.find((j) => j.id === id);
+  if (!job) {
+    return res.status(404).json({ ok: false, error: "Job not found" });
+  }
+
+  if (!caregiverId) {
+    return res.status(400).json({
+      ok: false,
+      error: "caregiverId is required",
+    });
+  }
+
+  job.assignedCaregiverId = caregiverId;
+  job.status = "assigned";
+
+  return res.json({
+    ok: true,
+    message: "Job assigned to caregiver (temporary in-memory store)",
     job,
   });
 });
