@@ -2,14 +2,14 @@
 
 import { Router } from "express";
 import { CaregiverProfile } from "../types/Caregiver";
+import { caregivers } from "../store/inMemoryDb";
 
 const router = Router();
 
 /**
- * TEMP in-memory caregiver list.
- * Developer will replace with real database queries.
+ * Caregiver routes (temporary in-memory implementation).
+ * Developer will replace with real database operations.
  */
-const caregivers: CaregiverProfile[] = [];
 
 function generateId() {
   return "cg_" + Math.random().toString(36).substring(2, 10);
