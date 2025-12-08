@@ -2,15 +2,16 @@
 
 import { Router } from "express";
 import { Agency } from "../types/Agency";
+import { agencies } from "../store/inMemoryDb";
 
 const router = Router();
 
 /**
- * TEMP in-memory agency list.
+ * Agency routes (temporary in-memory implementation).
  * Developer will replace this with real database queries.
  */
-const agencies: Agency[] = [];
 
+// Using shared agencies[] imported from inMemoryDb
 function generateId() {
   return "ag_" + Math.random().toString(36).substring(2, 10);
 }
