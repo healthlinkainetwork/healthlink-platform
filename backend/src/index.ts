@@ -10,6 +10,7 @@ import jobsRouter from "./routes/jobs";
 import agenciesRouter from "./routes/agencies";
 import ratingsRouter from "./routes/ratings";
 import gamificationRouter from "./routes/gamification";
+import notificationsRouter from "./routes/notifications";
 
 config();
 
@@ -28,6 +29,7 @@ app.use("/jobs", jobsRouter);
 app.use("/agencies", agenciesRouter);
 app.use("/ratings", ratingsRouter);
 app.use("/gamification", gamificationRouter);
+app.use("/notifications", notificationsRouter);
 
 app.get("/", (_req, res) => {
   res.json({ ok: true, message: "HealthLink backend API root" });
