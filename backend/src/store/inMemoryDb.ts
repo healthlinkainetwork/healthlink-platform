@@ -4,6 +4,7 @@ import type { CaregiverProfile } from "../types/Caregiver";
 import type { Job } from "../types/Job";
 import type { Agency } from "../types/Agency";
 import type { Rating } from "../types/Rating";
+import type { Notification } from "../types/Notification";
 
 /**
  * TEMP in-memory "database".
@@ -14,3 +15,4 @@ export const caregivers: CaregiverProfile[] = [];
 export const jobs: Job[] = [];
 export const agencies: Agency[] = [];
 export const ratings: Rating[] = [];
+export const notifications: Notification[] = [];
